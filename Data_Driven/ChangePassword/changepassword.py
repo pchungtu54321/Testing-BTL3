@@ -71,16 +71,15 @@ class TestChangePassword():
 
     submitBtn.click()
     time.sleep(2)
-    if expectedResult == "Success":
-        successAlert = self.driver.find_element(By.CLASS_NAME,'alert-success')
-    elif expectedResult == "Invalid":        
-        alertDanger = self.driver.find_element(By.CLASS_NAME,'alert-danger')
-    elif expectedResult == "Warning":        
-        alertWarning = self.driver.find_element(By.CLASS_NAME,'alert-warning')
-
-        
+    if expectedResult == "Success" and self.driver.find_element(By.CLASS_NAME,'alert-success'):
+        print("Success", newpassword)
+        return "Passed";
+    elif expectedResult == "Invalid" and self.driver.find_element(By.CLASS_NAME,'alert-danger'):
+        return "Passed";
+    elif expectedResult == "Warning" and self.driver.find_element(By.CLASS_NAME,'alert-warning'):
+        return "Passed";
     
-  
+    return "Failed";
 
 if __name__ == "__main__":
     excel = FileExcelReader('SecB_changepass_data.xlsx', 'Sheet1')
@@ -89,11 +88,11 @@ if __name__ == "__main__":
     test.setup_method()
     nRows = excel.getRowCount()
     for row in range(2, nRows + 1):
-        username = excel.readData(row,1)
-        oldpassword = excel.readData(row,2)
-        newpassword = excel.readData(row,3)
-        confirmpassword = excel.readData(row,4)
-        expectedResult = excel.readData(row,5)
+        username = excel.readData(row,2)
+        oldpassword = excel.readData(row,3)
+        newpassword = excel.readData(row,4)
+        confirmpassword = excel.readData(row,5)
+        expectedResult = excel.readData(row,6)
 
         if username is None:
             username = ""
@@ -106,9 +105,10 @@ if __name__ == "__main__":
             
         try:
             result = test.test_changepassword(username, oldpassword,newpassword,confirmpassword,expectedResult)
-            excel.writeData("Passed",row,6)
+            excel.writeData(result,row,7)
         except:
-            excel.writeData("Failed",row,6)
+            excel.writeData("Failed",row,7)
+        print(row, result)
 
 
     test.teardown_method()
