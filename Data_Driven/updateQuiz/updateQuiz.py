@@ -50,18 +50,20 @@ class TestUpdateQuiz():
         self.driver.quit()
 
     def first_step(self):
-        self.driver.get('https://sso.hcmut.edu.vn/cas/login?service=https%3A%2F%2Fe-learning.hcmut.edu.vn%2Flogin%2Findex.php%3FauthCAS%3DCAS')
+        self.driver.get('https://sso.hcmut.edu.vn/cas/login?service=https%3A%2F%2Flms.hcmut.edu.vn%2Flogin%2Findex.php%3FauthCAS%3DCAS')
 
-        self.driver.find_element(By.NAME,"username").send_keys("010354")
-        self.driver.find_element(By.NAME,"password").send_keys("010354")
+        self.driver.find_element(By.NAME,"username").send_keys("010552")
+        self.driver.find_element(By.NAME,"password").send_keys("010552")
         self.driver.find_element(By.NAME,"submit").click()
         time.sleep(2)
 
-        self.driver.get('https://e-learning.hcmut.edu.vn/course/modedit.php?update=73403&return=1')
+        # Go to link for create new quizz
+        self.driver.get('https://lms.hcmut.edu.vn/course/modedit.php?add=quiz&type&course=48411&section=3&return=0&sr=0&beforemod=0')
         time.sleep(1)
 
-        self.driver.find_element(By.ID, 'collapseElement-1').click()
-        time.sleep(5)
+        #Expand all
+        self.driver.find_element(By.CLASS_NAME, 'collapseexpand').click()
+        time.sleep(3)
 
     def test_updateQuiz(self, name, open, close, limit, expectedResult):
         self.first_step()
@@ -103,13 +105,14 @@ if __name__ == "__main__":
     excel = FileExcelReader('SecB_updatequiz_data.xlsx', 'Sheet1')
     test = TestUpdateQuiz()
     test.setup_method()
+
     nRows = excel.getRowCount()
     for row in range(2, nRows + 1):
-        name = excel.readData(row,1)
-        open = excel.readData(row,2)
-        close = excel.readData(row,3)
-        limit = excel.readData(row,4)
-        expectedResult = excel.readData(row,5)
+        name = excel.readData(row,2)
+        open = excel.readData(row,3)
+        close = excel.readData(row,4)
+        limit = excel.readData(row,5)
+        expectedResult = excel.readData(row,6)
        
         if name is None:
             name = ""
@@ -122,8 +125,8 @@ if __name__ == "__main__":
 
         try:
             result = test.test_updateQuiz(name, open, close, limit, expectedResult)
-            excel.writeData("Passed",row,5)
+            excel.writeData("Passed",row,6)
         except:
-            excel.writeData("Failed",row,5)
+            excel.writeData("Failed",row,6)
 
     test.teardown_method()
