@@ -53,8 +53,8 @@ class TestRegisterSTCard():
         password = self.driver.find_element(By.NAME,"password")  
         submitBtn = self.driver.find_element(By.NAME,"submit")  
         
-        username.send_keys("quan.thibluesky17")
-        password.send_keys("khacquan211")
+        username.send_keys("thanh.nguyensythanh11")
+        password.send_keys("Thanh1107.")
         submitBtn.click()
   
     def teardown_method(self):
@@ -155,7 +155,7 @@ class TestRegisterSTCard():
                 assert annoucetext.text=="Bạn chưa xác nhận địa chỉ gửi kết quả"      
 
 if __name__ == "__main__":
-    excel = FileExcelReader('H:\Testing-Assignment\Data_Driven\RegisterCard\SecB_registerCard_data.xlsx', 'Sheet1')
+    excel = FileExcelReader('SecB_registerCard_data.xlsx', 'Sheet1')
 
     test = TestRegisterSTCard()
     test.setup_method()
