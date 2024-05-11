@@ -155,7 +155,7 @@ class TestRegisterSTCard():
                 assert annoucetext.text=="Bạn chưa xác nhận địa chỉ gửi kết quả"      
 
 if __name__ == "__main__":
-    excel = FileExcelReader('SecB_registerCard_data.xlsx', 'Sheet1')
+    excel = FileExcelReader('H:\Testing-Assignment\Data_Driven\RegisterCard\SecB_registerCard_data.xlsx', 'Sheet1')
 
     test = TestRegisterSTCard()
     test.setup_method()

@@ -52,8 +52,8 @@ class TestBuyBooks():
     password = self.driver.find_element(By.NAME,"password")  
     submitBtn = self.driver.find_element(By.NAME,"submit")  
     
-    username.send_keys("quoc.le1804")
-    password.send_keys("baoquoc1804")
+    username.send_keys("tu.phuong1014442772")
+    password.send_keys("stitchen33269")
     submitBtn.click()
   
   def teardown_method(self):
