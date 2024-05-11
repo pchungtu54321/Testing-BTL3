@@ -76,6 +76,10 @@ class TestAddQuestion(unittest.TestCase):
         self.driver.execute_script("arguments[0].setAttribute('value','')", self.driver.find_element(By.ID, 'id_defaultmark'))
         time.sleep(1)
 
+        #Save
+        self.driver.find_element(By.ID,"id_updatebutton").click()
+        time.sleep(3)
+
         # Expected: error message
         error_message = self.driver.find_element(By.ID,'id_error_defaultmark').get_attribute("outerText")
         assert ("You must supply a value here" in error_message)
@@ -105,6 +109,65 @@ class TestAddQuestion(unittest.TestCase):
         title = self.driver.find_element(By.TAG_NAME,"h2").text
         assert ("Editing" in title)
 
+    def test_5(self):
+        self.first_step()
+        
+        #Fill name
+        self.driver.execute_script("arguments[0].setAttribute('value','test_5')", self.driver.find_element(By.ID, 'id_name'))
+        time.sleep(1)
+
+        #Fill description
+        frame = self.driver.find_element(By.ID, "id_questiontext_ifr")  # Locate the iframe element
+        self.driver.switch_to.frame(frame)
+        body = self.driver.find_element(By.TAG_NAME, "body")
+        body.clear()
+        # Fill text into the body element
+        body.send_keys("test_5")
+
+        self.driver.switch_to.default_content()
+
+        #Mark
+        self.driver.execute_script("arguments[0].setAttribute('value','-1')", self.driver.find_element(By.ID, 'id_defaultmark'))
+        time.sleep(1)
+
+        #Save
+        self.driver.find_element(By.ID,"id_updatebutton").click()
+        time.sleep(3)
+
+        # Expected message: The default mark must be positive
+        error_message = self.driver.find_element(By.ID,'id_error_defaultmark').get_attribute("outerText")
+        assert ("The default mark must be positive" in error_message)
+
+    def test_6(self):
+        self.first_step()
+        
+        #Fill name
+        self.driver.execute_script("arguments[0].setAttribute('value','test_6')", self.driver.find_element(By.ID, 'id_name'))
+        time.sleep(1)
+
+        #Fill description
+        frame = self.driver.find_element(By.ID, "id_questiontext_ifr")  # Locate the iframe element
+        self.driver.switch_to.frame(frame)
+        body = self.driver.find_element(By.TAG_NAME, "body")
+        body.clear()
+        # Fill text into the body element
+        body.send_keys("test_6")
+
+        self.driver.switch_to.default_content()
+
+        #Mark
+        self.driver.execute_script("arguments[0].setAttribute('value','test_6')", self.driver.find_element(By.ID, 'id_defaultmark'))
+        time.sleep(1)
+
+        #Save
+        self.driver.find_element(By.ID,"id_updatebutton").click()
+        time.sleep(3)
+
+        # Expected mesage: You must enter a number here
+        error_message = self.driver.find_element(By.ID,'id_error_defaultmark').get_attribute("outerText")
+        assert ("You must enter a number here" in error_message)
+    
+    
     def tearDown(self):
         self.driver.quit()
 
