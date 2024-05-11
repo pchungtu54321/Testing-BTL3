@@ -161,7 +161,7 @@ class TestCreateTest(unittest.TestCase):
         time.sleep(3)
 
         # Expected: error message
-        error_message = self.driver.find_element(By.ID,'id_error_timeclose').get_attribute("outerText")
+        error_message = self.driver.find_element(By.ID,'id_error_timeclose').get_attribute("outerText") 
         assert ("Could not update the quiz. You have specified a close date before the open date." in error_message)
     
     def test_8(self): 
@@ -179,7 +179,7 @@ class TestCreateTest(unittest.TestCase):
         time.sleep(3)
 
         # Expected: error message
-        assert (self.driver.find_element(By.ID,'id_error_timeclose').is_displayed())
+        assert (self.driver.find_element(By.ID,'id_error_timelimit').is_displayed())
         
     def tearDown(self):
         self.driver.quit()
