@@ -43,7 +43,7 @@ class FileExcelReader:
         sheet.cell(row=rownum, column=colnum).value = data
         wordbook.save(self.file)
 
-class TestUpdateQuiz():
+class TestAddQuest():
     def setup_method(self):
         self.driver = webdriver.Chrome()
         self.driver.maximize_window()
@@ -62,62 +62,58 @@ class TestUpdateQuiz():
         time.sleep(2)
 
         # Go to link for create new quizz
-        self.driver.get('https://lms.hcmut.edu.vn/course/modedit.php?add=quiz&type&course=48411&section=3&return=0&sr=0&beforemod=0')
+        self.driver.get('https://lms.hcmut.edu.vn/question/bank/editquestion/question.php?courseid=48411&sesskey=MORn49Z0Oy&qtype=truefalse&returnurl=%2Fquestion%2Fedit.php%3Fcourseid%3D48411%26deleteall%3D1&courseid=48411&category=63872')
         time.sleep(1)
 
-        #Expand all
-        self.driver.find_element(By.CLASS_NAME, 'collapseexpand').click()
-        time.sleep(3)
 
-    def test_updateQuiz(self, name, open, close, limit, expectedResult):
+    def test_add_quest(self, name, description, mark, expectedResult):
         self.first_step()
+        
         self.driver.execute_script(f"arguments[0].setAttribute('value', '{name}')", self.driver.find_element(By.ID, 'id_name'))
         time.sleep(1)
 
-        if (open != ""):
-            self.driver.find_element(By.ID, 'id_timeopen_enabled').click()
-            time.sleep(2)
+        #Fill description
+        frame = self.driver.find_element(By.ID, "id_questiontext_ifr")  # Locate the iframe element
+        self.driver.switch_to.frame(frame)
+        body = self.driver.find_element(By.TAG_NAME, "body")
+        body.clear()
+        # Fill text into the body element
+        body.send_keys(description)
 
-        if (close != ""):
-            self.driver.find_element(By.ID, 'id_timeclose_enabled').click()
-            time.sleep(2)
+        self.driver.switch_to.default_content()
 
-        if (open != "" and close != ""):
-            self.driver.find_element(By.XPATH, f'//*[@id="id_timeopen_year"]/option[text()="{open}"]').click()
-            time.sleep(2)
-            self.driver.find_element(By.XPATH, f'//*[@id="id_timeclose_year"]/option[text()="{close}"]').click()
-            time.sleep(2)
 
+        self.driver.execute_script(f"arguments[0].setAttribute('value','{mark}')", self.driver.find_element(By.ID, 'id_defaultmark'))
+        time.sleep(1)
+
+
+        self.driver.find_element(By.ID,"id_updatebutton").click()
+        time.sleep(3)
+
+        if expectedResult == "FillName":
+            error_message = self.driver.find_element(By.ID,'id_error_name').get_attribute("outerText")
+            assert ("You must supply a value here" in error_message)
+            
+        elif expectedResult == "FillText":
+            error_message = self.driver.find_element(By.ID,'id_error_questiontext').get_attribute("outerText")
+            assert ("You must supply a value here" in error_message)
         
-        if (limit != ""):
-            self.driver.find_element(By.ID, 'id_timelimit_enabled').click()
-            time.sleep(2)
+        elif expectedResult == "FillMark":
+            error_message = self.driver.find_element(By.ID,'id_error_defaultmark').get_attribute("outerText")
+            assert ("You must supply a value here" in error_message)
 
-            self.driver.execute_script(f"arguments[0].setAttribute('value','{limit}')", self.driver.find_element(By.ID, 'id_timelimit_number'))
-            time.sleep(2)
+        elif expectedResult == "SaveSucess":
+            title = self.driver.find_element(By.TAG_NAME,"h2").text
+            assert ("Editing" in title)
 
+        elif expectedResult == "MustPositive":
+            error_message = self.driver.find_element(By.ID,'id_error_defaultmark').get_attribute("outerText")
+            assert ("The default mark must be positive" in error_message)
 
-        self.driver.find_element(By.ID,"id_submitbutton2").click()
-        time.sleep(5)
+        elif expectedResult == "MustNumber":
+            error_message = self.driver.find_element(By.ID,'id_error_defaultmark').get_attribute("outerText")
+            assert ("You must enter a number here" in error_message)
 
-        if expectedResult == "SaveSucess":
-            elements = self.driver.find_elements(By.CLASS_NAME, 'activityname')
-            for item in elements:
-                if name in item.get_attribute("outerText"):
-                    assert item.is_displayed()
-        
-        elif expectedResult == "MissingName":
-            self.driver.find_element(By.ID,'id_error_name')
-
-        elif expectedResult == "InvalidOpen":
-            self.driver.find_element(By.ID,'id_error_timeclose')
-          
-        elif expectedResult == "InvalidClose":
-            self.driver.find_element(By.ID,'id_error_timeclose')
-
-        elif expectedResult == "InvalidLimit":
-            self.driver.find_element(By.ID,'id_error_timelimit')
-        
 
         time.sleep(1)
         self.driver.get('https://lms.hcmut.edu.vn/login/logout.php?sesskey=NyUKwbW7f1')
@@ -128,37 +124,35 @@ class TestUpdateQuiz():
 
 
 if __name__ == "__main__":
-    directory = r"Data_Driven\updateQuiz"
+    directory = r"Data_Driven\addQuestion"
     path = os.path.join(os.getcwd(), directory) 
     os.chdir(path)
     
-    excel = FileExcelReader('SecB_updatequiz_data.xlsx', 'Sheet1')
-    test = TestUpdateQuiz()
+    excel = FileExcelReader('SecB_addQuest_data.xlsx', 'Sheet1')
+    test = TestAddQuest()
     
     test.setup_method()
 
     nRows = excel.getRowCount()
+    print(nRows)
     for row in range(2, nRows + 1):
         name = excel.readData(row,2)
-        open = excel.readData(row,3)
-        close = excel.readData(row,4)
-        limit = excel.readData(row,5)
-        expectedResult = excel.readData(row,6)
+        description = excel.readData(row,3)
+        mark = excel.readData(row,4)
+    
+        expectedResult = excel.readData(row,5)
        
         if name is None:
             name = ""
-        if open is None:
-            open = ""
-        if close is None:
-            close = ""
-        if limit is None:
-            limit = ""
-
+        if description is None:
+            description = ""
+        if mark is None:
+            mark = ""
+    
         try:
-            result = test.test_updateQuiz(name, open, close, limit, expectedResult)
-            excel.writeData("Passed",row,7)
+            result = test.test_add_quest(name, description, mark, expectedResult)
+            excel.writeData("Passed",row,6)
         except:
-            print(result)
-            excel.writeData("Failed",row,7)
+            excel.writeData("Failed",row,6)
 
     test.teardown_method()
