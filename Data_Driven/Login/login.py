@@ -73,9 +73,9 @@ class TestLogin():
         time.sleep(1)
         alert.accept()
         time.sleep(1)
-        loginPageBtn = self.driver.find_element(By.XPATH,'/html/body/div[2]/div/div/div[2]/div/a[1]')
-        loginPageBtn.click()
-        time.sleep(2)
+        # loginPageBtn = self.driver.find_element(By.XPATH,'/html/body/div[2]/div/div/div[2]/div/a[1]')
+        # loginPageBtn.click()
+        # time.sleep(2)
         return True
     elif expectedResult == "InvalidAccount": #done
         errorNotification = self.driver.find_element(By.XPATH,'//*[@id="msg"]')
