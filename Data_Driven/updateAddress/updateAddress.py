@@ -65,7 +65,7 @@ class TestUpdateID():
 
     def test_update_address(self, nationalityId, placeOfBirthId, religionId, ethnicityId, priorityAreaId, 
                             priorityObjectId, youthUnionJoinDate, householdProvinceCityId, householdDistrictId,
-                            householdNumber, provinceCityContactId, districtContactId, personalPhoneNumber, houseNumber,
+                            householdNumber,
                             fatherName, fatherYearOfBirth, fatherJob, motherName, motherYearOfBirth, motherJob):
         self.driver.get("https://mybk.hcmut.edu.vn/app/he-thong-quan-ly-hoc-vu/quan-ly-sinh-vien/cap-nhat-ho-so-sinh-vien/181730")
         time.sleep(3)
@@ -75,7 +75,7 @@ class TestUpdateID():
         original = self.driver.find_element(By.XPATH, '//*[@id="select2-nationalityId-container"]').text.replace('×\n', '')
         if original != nationalityId: 
             change = True
-            self.driver.find_element(By.XPATH, '//*[@id="select2-nationalityId-container"]/span').click()
+            self.driver.find_element(By.XPATH, '//*[@id="select2-nationalityId-container"]').click()
             time.sleep(1)
             add_new = self.driver.find_element(By.XPATH, '/html/body/span/span/span[1]/input')
             add_new.send_keys(nationalityId)
@@ -86,7 +86,7 @@ class TestUpdateID():
         original = self.driver.find_element(By.XPATH, '//*[@id="select2-placeOfBirthId-container"]').text.replace('×\n', '')
         if original != placeOfBirthId: 
             change = True
-            self.driver.find_element(By.XPATH, '//*[@id="select2-placeOfBirthId-container"]/span').click()
+            self.driver.find_element(By.XPATH, '//*[@id="select2-placeOfBirthId-container"]').click()
             time.sleep(1)
             add_new = self.driver.find_element(By.XPATH, '/html/body/span/span/span[1]/input')
             add_new.send_keys(placeOfBirthId)
@@ -97,7 +97,7 @@ class TestUpdateID():
         original = self.driver.find_element(By.XPATH, '//*[@id="select2-religionId-container"]').text.replace('×\n', '')
         if original != religionId: 
             change = True
-            self.driver.find_element(By.XPATH, '//*[@id="select2-religionId-container"]/span').click()
+            self.driver.find_element(By.XPATH, '//*[@id="select2-religionId-container"]').click()
             time.sleep(1)
             add_new = self.driver.find_element(By.XPATH, '/html/body/span/span/span[1]/input')
             add_new.send_keys(religionId)
@@ -108,7 +108,7 @@ class TestUpdateID():
         original = self.driver.find_element(By.XPATH, '//*[@id="select2-ethnicityId-container"]').text.replace('×\n', '')
         if original != ethnicityId: 
             change = True
-            self.driver.find_element(By.XPATH, '//*[@id="select2-ethnicityId-container"]/span').click()
+            self.driver.find_element(By.XPATH, '//*[@id="select2-ethnicityId-container"]').click()
             time.sleep(1)
             add_new = self.driver.find_element(By.XPATH, '/html/body/span/span/span[1]/input')
             add_new.send_keys(ethnicityId)
@@ -120,7 +120,7 @@ class TestUpdateID():
         original = self.driver.find_element(By.XPATH, '//*[@id="select2-priorityAreaId-container"]').text.replace('×\n', '')
         if original != priorityAreaId: 
             change = True
-            self.driver.find_element(By.XPATH, '//*[@id="select2-priorityAreaId-container"]/span').click()
+            self.driver.find_element(By.XPATH, '//*[@id="select2-priorityAreaId-container"]').click()
             time.sleep(1)
             add_new = self.driver.find_element(By.XPATH, '/html/body/span/span/span[1]/input')
             add_new.send_keys(priorityAreaId)
@@ -131,7 +131,7 @@ class TestUpdateID():
         original = self.driver.find_element(By.XPATH, '//*[@id="select2-priorityObjectId-container"]').text.replace('×\n', '')
         if original != priorityObjectId: 
             change = True
-            self.driver.find_element(By.XPATH, '//*[@id="select2-priorityObjectId-container"]/span').click()
+            self.driver.find_element(By.XPATH, '//*[@id="select2-priorityObjectId-container"]').click()
             time.sleep(1)
             add_new = self.driver.find_element(By.XPATH, '/html/body/span/span/span[1]/input')
             add_new.send_keys(priorityObjectId.split(' ')[-1])
@@ -153,7 +153,7 @@ class TestUpdateID():
         original = self.driver.find_element(By.XPATH, '//*[@id="select2-householdProvinceCityId-container"]').text.replace('×\n', '')
         if original != householdProvinceCityId: 
             change = True
-            self.driver.find_element(By.XPATH, '//*[@id="select2-householdProvinceCityId-container"]/span').click()
+            self.driver.find_element(By.XPATH, '//*[@id="select2-householdProvinceCityId-container"]').click()
             time.sleep(1)
             add_new = self.driver.find_element(By.XPATH, '/html/body/span/span/span[1]/input')
             add_new.send_keys(householdProvinceCityId)
@@ -164,7 +164,7 @@ class TestUpdateID():
         original = self.driver.find_element(By.XPATH, '//*[@id="select2-householdDistrictId-container"]').text.replace('×\n', '')
         if original != householdDistrictId: 
             change = True
-            self.driver.find_element(By.XPATH, '//*[@id="select2-householdDistrictId-container"]/span').click()
+            self.driver.find_element(By.XPATH, '//*[@id="select2-householdDistrictId-container"]').click()
             time.sleep(1)
             add_new = self.driver.find_element(By.XPATH, '/html/body/span/span/span[1]/input')
             add_new.send_keys(householdDistrictId)
@@ -182,51 +182,6 @@ class TestUpdateID():
             inp.send_keys(Keys.ENTER)
             time.sleep(1)
             
-        # provinceCityContactId
-        original = self.driver.find_element(By.XPATH, '//*[@id="select2-provinceCityContactId-container"]').text.replace('×\n', '')
-        print(original, provinceCityContactId, original == provinceCityContactId)
-        if original != provinceCityContactId: 
-            print("hể")
-            change = True
-            self.driver.find_element(By.XPATH, '//*[@id="select2-provinceCityContactId-container"]/span').click()
-            time.sleep(1)
-            add_new = self.driver.find_element(By.XPATH, '/html/body/span/span/span[1]/input')
-            add_new.send_keys(provinceCityContactId)
-            add_new.send_keys(Keys.ENTER)
-            time.sleep(1)
-            
-        # districtContactId
-        original = self.driver.find_element(By.XPATH, '//*[@id="select2-districtContactId-container"]').text.replace('×\n', '')
-        if original != districtContactId: 
-            change = True
-            self.driver.find_element(By.XPATH, '//*[@id="select2-districtContactId-container"]/span').click()
-            time.sleep(1)
-            add_new = self.driver.find_element(By.XPATH, '/html/body/span/span/span[1]/input')
-            add_new.send_keys(districtContactId)
-            add_new.send_keys(Keys.ENTER)
-            time.sleep(1)
-            
-        # personalPhoneNumber
-        original = self.driver.find_element(By.XPATH, '//*[@id="personalPhoneNumber"]').get_attribute("value")
-        if original != personalPhoneNumber: 
-            change = True
-            inp = self.driver.find_element(By.XPATH, '//*[@id="personalPhoneNumber"]')
-            inp.send_keys(Keys.CONTROL + "a")
-            inp.send_keys(Keys.DELETE)
-            inp.send_keys(personalPhoneNumber)
-            inp.send_keys(Keys.ENTER)
-            time.sleep(1)
-        
-        # houseNumber
-        original = self.driver.find_element(By.XPATH, '//*[@id="houseNumber"]').get_attribute("value")
-        if original != houseNumber: 
-            change = True
-            inp = self.driver.find_element(By.XPATH, '//*[@id="houseNumber"]')
-            inp.send_keys(Keys.CONTROL + "a")
-            inp.send_keys(Keys.DELETE)
-            inp.send_keys(houseNumber)
-            inp.send_keys(Keys.ENTER)
-            time.sleep(1)
             
         # fatherName
         original = self.driver.find_element(By.XPATH, '//*[@id="fatherName"]').get_attribute("value")
@@ -335,16 +290,12 @@ if __name__ == "__main__":
         householdProvinceCityId = excel.readData(row, 8)
         householdDistrictId = excel.readData(row, 9)
         householdNumber = excel.readData(row, 10)
-        provinceCityContactId = excel.readData(row, 11)
-        districtContactId = excel.readData(row, 12)
-        personalPhoneNumber = excel.readData(row, 13)
-        houseNumber = excel.readData(row, 14)
-        fatherName = excel.readData(row, 15)
-        fatherYearOfBirth = excel.readData(row, 16)
-        fatherJob = excel.readData(row, 17)
-        motherName = excel.readData(row, 18)
-        motherYearOfBirth = excel.readData(row, 19)
-        motherJob = excel.readData(row, 20)
+        fatherName = excel.readData(row, 11)
+        fatherYearOfBirth = excel.readData(row, 12)
+        fatherJob = excel.readData(row, 13)
+        motherName = excel.readData(row, 14)
+        motherYearOfBirth = excel.readData(row, 15)
+        motherJob = excel.readData(row, 16)
         
         if nationalityId is None:
             nationalityId = ""
@@ -376,14 +327,6 @@ if __name__ == "__main__":
         if householdNumber is None:
             householdNumber = ""
 
-        if provinceCityContactId is None:
-            provinceCityContactId = ""
-
-        if districtContactId is None:
-            districtContactId = ""
-
-        if personalPhoneNumber is None:
-            personalPhoneNumber = ""
 
         if fatherName is None:
             fatherName = ""
@@ -407,14 +350,14 @@ if __name__ == "__main__":
         try:
             result = test.test_update_address(nationalityId, placeOfBirthId, religionId, ethnicityId, priorityAreaId, 
                                                 priorityObjectId, youthUnionJoinDate, householdProvinceCityId, householdDistrictId,
-                                                householdNumber, provinceCityContactId, districtContactId, personalPhoneNumber, houseNumber,
+                                                householdNumber, 
                                                 fatherName, fatherYearOfBirth, fatherJob, motherName, motherYearOfBirth, motherJob)
             if result:
-                excel.writeData("Passed", row, 21)
+                excel.writeData("Passed", row, 17)
             else:
-                excel.writeData("Failed", row, 21)
+                excel.writeData("Failed", row, 17)
         except Exception as e:
-            excel.writeData("Error", row, 21)
+            excel.writeData("Error", row, 17)
             print(e)
 
    
